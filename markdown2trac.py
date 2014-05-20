@@ -11,6 +11,7 @@ setex_header_2 = re.compile('(.+\n)(-+)')
 litalics = re.compile('_(?P<keep>[\W])')
 ritalics = re.compile('(?P<keep>[\W])_')
 numbered = re.compile('^1\.')
+image = re.compile('(\!\[\]\()(.*)(\))')
 
 def translate_line(line):
     # Substitute # for = in the headers
@@ -32,7 +33,7 @@ def translate_line(line):
     line = numbered.sub(' 1.', line)
     
     # Search for image tag and extract image information
-    image_match = re.search('(\!\[\]\()(.*)(\))', line);
+    image_match = image.search(line);
     if image_match:
       url = image_match.group(2)
       tag_original = image_match.group(0)
