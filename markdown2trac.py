@@ -27,7 +27,17 @@ def translate_line(line):
 
     # Add a space before numbered lists
     line = numbered.sub(' 1.', line)
-
+    
+    #Search for image tag and extract image information
+    image_match = re.search('(\!\[\]\()(.*)(\))', line);
+    
+    if image_match:
+      url = image_match.group(2)
+      tag_original = image_match.group(0)
+      tag_new = '[[Image(' + url + ')]]'
+      #replace the tag
+      line = line.replace(tag_original, tag_new)
+    
     # Return with any trailing newline removed
     return line.rstrip()
 
